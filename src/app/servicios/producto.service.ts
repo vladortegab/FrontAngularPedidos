@@ -8,7 +8,9 @@ import { SeguridadService } from './seguridad.service';
   providedIn: 'root'
 })
 export class ProductoService {
-url = 'http://localhost:3000';
+  url = 'https://back-pedidos.onrender.com';
+
+//  url = 'http://localhost:3000';
 token : String = '';
 
   constructor(private http: HttpClient, private seguridadServicio: SeguridadService) { 
