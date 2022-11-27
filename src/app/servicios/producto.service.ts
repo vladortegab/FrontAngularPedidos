@@ -26,10 +26,10 @@ token : String = '';
   CrearProducto(producto: ModeloProducto): Observable<ModeloProducto>{
   return this.http.post<ModeloProducto>(`${this.url}/productos`,producto,{
     headers: new HttpHeaders({
-      'Authorization' : `Bearer ${this.token}`
+      'Authorization': `Bearer ${this.token}`
     })
   }
-  )
+  );
 }
 
 ActualizarProducto(producto: ModeloProducto): Observable<ModeloProducto>{
@@ -38,7 +38,7 @@ ActualizarProducto(producto: ModeloProducto): Observable<ModeloProducto>{
       'Authorization' : `Bearer ${this.token}`
     })
   }
-  )
+  );
 }
 EliminarProducto(id: String): Observable<any>{
   return this.http.delete(`${this.url}/productos/${id}`,{

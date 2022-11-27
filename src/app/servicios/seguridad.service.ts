@@ -7,11 +7,11 @@ import { ModeloIdentificar } from '../modelos/identificar.modelos';
   providedIn: 'root'
 })
 export class SeguridadService {
-
-  url='http://localhost:3000';
+  url='https://back-pedidos.onrender.com';
+  //url='http://localhost:3000';
   datosUsuarioEnSesion = new BehaviorSubject<ModeloIdentificar>(new ModeloIdentificar());
   constructor(private http: HttpClient){
-    this.VerificarSesionActual()
+    this.VerificarSesionActual();
   }
 
   VerificarSesionActual(){
@@ -28,7 +28,7 @@ ObtenerDatosUsuarioEnSesion(){
   return this.datosUsuarioEnSesion.asObservable();
 }
 
-  Identificar (usuario:string, clave: string): Observable<ModeloIdentificar>{
+  Identificar(usuario:string, clave: string): Observable<ModeloIdentificar>{
     return this.http.post<ModeloIdentificar>(`${this.url}/identificarPersona`,{
       usuario: usuario,
       clave: clave

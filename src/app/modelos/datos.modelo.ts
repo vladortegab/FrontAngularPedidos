@@ -1,5 +1,5 @@
 export class ModeloDatos{
-    id?: string;
-    nombre?: string;
-    correo?: string;
+    id?: String;
+    nombre?: String;
+    correo?: String;
 }

@@ -1,6 +1,6 @@
 export class ModeloProducto{
-id?: string;
-nombre?:string;
+id?: String;
+nombre?:String;
 precio?: number;
-imagen?: string;
+imagen?: String;
 }

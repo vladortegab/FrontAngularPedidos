@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
-//import * as cryptoJs from 'crypto-js';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModeloDatos } from 'src/app/modelos/datos.modelo';
 import { SeguridadService } from 'src/app/servicios/seguridad.service';
-const cryptoJS = require("cryptojs");
-
-
+import * as cryptoJS  from "crypto-js";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-identificacion',
@@ -13,30 +11,41 @@ const cryptoJS = require("cryptojs");
   styleUrls: ['./identificacion.component.css']
 })
 export class IdentificacionComponent implements OnInit {
+  
   fgValidador: FormGroup = this.fb.group({
     'usuario': ['',[Validators.required, Validators.email]],
-    'clave': ['',[Validators.required]]
-    
+    'clave':['',[Validators.required]]
+
   });
+  
   constructor(private fb: FormBuilder,
     private servicioSeguridad: SeguridadService,
-    private router: Router){}
+    private router: Router
+    ){
 
-    ngOnInit(): void {
-        
-    }
-    IdentificarUsuario(){
-      let usuario = this.fgValidador.controls["usuario"].value;
-      let clave = this.fgValidador.controls["clave"].value;
-      //alert("Datos recibidos"+ usuario+ " "+ clave);
-      let claveCifrada = cryptoJS.MD5(clave);
-      this.servicioSeguridad.Identificar(usuario,claveCifrada).subscribe((datos:any) => {
-        this.servicioSeguridad.AlmacenarSesion(datos);
-        this.router.navigate(['/inicio']);
-      }, (error:any) => {
-        alert ("Datos Invalidos")
+  }
+  ngOnInit(): void{
+    
+  }
 
-      })
-}
+  IdentificarUsuario(){
+    let usuario = this.fgValidador.controls["usuario"].value;
+    let clave = this.fgValidador.controls["clave"].value;    
+    let claveCifrada = cryptoJS.MD5(clave).toString();
+    //alert("clave sin cifrar: "+ clave);
+    //alert("clave crifrada: "+ claveCifrada);    
+    this.servicioSeguridad.Identificar(usuario, claveCifrada).subscribe((datos:any)=>{
+       //OK
+       alert("datos correctos");
+       this.servicioSeguridad.AlmacenarSesion(datos);
+       this.router.navigate(['/inicio']);
+    }, (error:any)=>{
+      //error
+      alert("datos inválidos");
+      alert(error.message);
+    });
+
+    
+  }
 
 }
